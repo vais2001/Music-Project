@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}All songs{% endblock %}
+{% block body %}
+<div class="p-3 mb-2 bg-danger-subtle text-emphasis-danger">
+<div class="container">
+{% for i in song %}
+<div class="card mb-3" style="max-width: 940px; padding-top:4%">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="{{i.album_picture}}" class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title" style="color: darkgreen;font-weight:500">{{i.song_name}}</h5>
+          <p class="card-text">{{i.album_title}}</p>
+          <a href=""><button class="btn btn-outline-success">Listen</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+</div>
+{% endblock %}

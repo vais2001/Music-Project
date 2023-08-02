@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}All songs{% endblock %}
+{% block body %}
+<div class="container">
+   <div class="row">
+    <div class="col-md-8" style="padding-top: 6%;">
+        <img src="{{song.album_picture}}"  alt="" height="300px" width="400px">
+    </div>    
+        <div class="col-md-6">
+          <h4  style="padding-top:6%; color: darkgreen;font-weight:500">song:{{song.song_name}}</h4>
+          <h2  style="padding-top:6%; color: darkgreen;font-weight:500">tittle:{{song.album_title}}</h2>
+          <h2  style="padding-top:6%; color: darkgreen;font-weight:500">singer:{{song.singer}}</h2>
+          <audio controls style="padding: 2%;">
+            <source src="{{song.song}}" type="audio/mp3">
+          </audio>
+          
+        </div>
+   </div> 
+
+</div>
+s
