@@ -16,5 +16,11 @@ def song_list(request):
 
 # def listen(song_id):
 #     print(Song.objects.filter(songid=song_id))
-def listen(request):
-    return render(request,'listen.html')
+def listen(request,id):
+    song=Song.objects.filter(song_id=id).first()
+    print(song.song_name)
+    return render(request,'listen.html',{'song':song})
+
+
+def sign_up(request):
+    return render(request,'signup.html')

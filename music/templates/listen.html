@@ -1,21 +1,27 @@
 {% extends 'base.html' %}
 {% block title %}All songs{% endblock %}
 {% block body %}
+<body style="background-color:powderblue;">
 <div class="container">
+   
    <div class="row">
     <div class="col-md-8" style="padding-top: 6%;">
-        <img src="{{song.album_picture}}"  alt="" height="300px" width="400px">
-    </div>    
+        <img src="/media/{{song.album_picture}}"  alt="" height="300px" width="400px">
+    </div>   
         <div class="col-md-6">
           <h4  style="padding-top:6%; color: darkgreen;font-weight:500">song:{{song.song_name}}</h4>
-          <h2  style="padding-top:6%; color: darkgreen;font-weight:500">tittle:{{song.album_title}}</h2>
-          <h2  style="padding-top:6%; color: darkgreen;font-weight:500">singer:{{song.singer}}</h2>
+          <h5  style="padding-top:6%; color: darkgreen;font-weight:500">tittle:{{song.album_title}}</h5>
+          <h6  style="padding-top:6%; color: darkgreen;font-weight:500">singer:{{song.singer}}</h6>
           <audio controls style="padding: 2%;">
-            <source src="{{song.song}}" type="audio/mp3">
+            <source src="/media/{{song.song}}" type="audio/ogg">
+            <source src="/media/{{song.song}}" type="audio/mp3">
           </audio>
-          
+          <svg xmlns="\uF417" width="50" height="20" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+          </svg>
         </div>
-   </div> 
-
+    </div> 
+    
 </div>
-s
+</body>
+{%endblock%}
