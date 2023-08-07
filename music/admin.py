@@ -7,5 +7,5 @@ class AdminSong(admin.ModelAdmin):
 admin.site.register(Song,AdminSong)
 
 class AdminViewer(admin.ModelAdmin):
-    list_display=['viewer_name','email','password']
+    list_display=['user_name','first_name','last_name','phone','email','password','rearrange_password']
 admin.site.register(Viewer,AdminViewer)
