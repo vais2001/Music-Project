@@ -1,14 +1,17 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseRedirect
-from music.models.listner import Song
+from music.models.listner import Song,Watch_later
 from django.views import View
 from music.models.viewer import Viewer
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
+
+from django.contrib.auth.forms import SetPasswordForm
 
 # Create your views here.
 def index(request):
     song=Song.objects.all()
+    print(song)
     return render(request,'index.html',{'song':song})
 
 
@@ -125,4 +128,28 @@ def logoutpage(request):
     
     
 def change_pass(request):
-    return render(request,'changepassword')   
+    if request.user.is_authenticated:
+        if request.method=="POST":
+            pass1=request.POST.get( 'pass1')
+            user=request.user
+            user.set_password(pass1)
+            user.save()
+            return HttpResponseRedirect('/login/')   
+            
+        else:
+            # fm=SetPasswordForm(user=request.user)
+            return render(request,'changepassword.html')  
+    else:  
+        return HttpResponseRedirect('/login/')
+    
+    
+def watchlater(request):
+    if request.method=="POST":
+        user=request.user
+        print(user)
+        song_id=request.POST.get('song_id')
+        print(song_id)
+        watchlater=Watch_later(user=user,song_id=song_id)
+        watchlater.save()
+        return redirect(f"/listen_song/{song_id}")
+    # return render (request,"listen.html ")
