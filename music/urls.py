@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from music import views
+from django.contrib.auth.decorators import login_required
 # from .views import Sign_up
 urlpatterns = [
     path('',views.index,name='index'),
@@ -14,3 +15,4 @@ urlpatterns = [
     path('watchlater/',views.watchlater,name='watchlater')
     
 ]
+

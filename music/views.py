@@ -5,17 +5,19 @@ from django.views import View
 from music.models.viewer import Viewer
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.forms import SetPasswordForm
 
 # Create your views here.
+@login_required(login_url="login/")
 def index(request):
     song=Song.objects.all()
     print(song)
     return render(request,'index.html',{'song':song})
 
 
-
+# @login_required()
 def song_list(request):
     song=Song.objects.all()
     return render(request,'song.html',{'song':song})
@@ -25,7 +27,7 @@ def song_list(request):
 #     print(Song.objects.filter(songid=song_id))
 def listen(request,id):
     song=Song.objects.filter(song_id=id).first()
-    print(song.song_name)
+    # print(song.song_name)
     return render(request,'listen.html',{'song':song})
 
 
@@ -76,20 +78,22 @@ def listen(request,id):
 def signup(request):
     if request.method=="POST":
          user_name=request.POST.get('user_name')
-         first_name=request.POST.get( ' first_name')
-         last_name=request.POST.get( 'last_name')
-         phone=request.POST.get( 'phone')
-         email=request.POST.get( 'email')
-         pass1=request.POST.get( 'pass1')
-         pass2=request.POST.get( 'pass2')   
+         first_name=request.POST.get('first_name')
+         print(first_name)
+         last_name=request.POST.get('last_name')
+         print(last_name)
+         phone=request.POST.get('phone')
+         email=request.POST.get('email')
+         pass1=request.POST.get('pass1')
+         pass2=request.POST.get('pass2')   
          print(user_name,first_name,last_name,phone,email,pass1,pass2)
          myuser=User.objects.create_user(user_name,email)
          print('----------------------------------')
          print(myuser.username)
          myuser.set_password(pass1)
          print(myuser)
-         myuser.firstname=first_name
-         myuser.lastname=last_name
+         myuser.first_name=first_name
+         myuser.last_name=last_name
          print(myuser.first_name, myuser.last_name)
          print('----------------------')
          myuser.save()
@@ -109,7 +113,7 @@ def signup(request):
 def loginpage(request):
     if request.method=="POST":
       user_name=request.POST.get('user_name') 
-      pass1=request.POST.get( 'pass1')
+      pass1=request.POST.get('pass1')
       print(user_name, pass1)
       user=authenticate(username=user_name,password=pass1) 
       print(type(user))
@@ -130,7 +134,7 @@ def logoutpage(request):
 def change_pass(request):
     if request.user.is_authenticated:
         if request.method=="POST":
-            pass1=request.POST.get( 'pass1')
+            pass1=request.POST.get('pass1')
             user=request.user
             user.set_password(pass1)
             user.save()
@@ -142,14 +146,20 @@ def change_pass(request):
     else:  
         return HttpResponseRedirect('/login/')
     
-    
 def watchlater(request):
     if request.method=="POST":
+        video_id=request.POST.get('video_id')
         user=request.user
-        print(user)
-        song_id=request.POST.get('song_id')
-        print(song_id)
-        watchlater=Watch_later(user=user,song_id=song_id)
-        watchlater.save()
-        return redirect(f"/listen_song/{song_id}")
-    # return render (request,"listen.html ")
+        watch=Watch_later.objects.filter(user=user,video_id=video_id)
+        print(watch)
+        if watch: 
+          msg="u r already added"
+        else:
+           
+            watchlater=Watch_later(user=user,video_id=video_id)
+            watchlater.save()
+            msg="u have successfuly added"
+        song=Song.objects.filter(song_id=video_id).first()
+        return render(request,'listen.html',{'song':song , 'msg':msg})    
+    return render(request,'watchlater.html')
+    
