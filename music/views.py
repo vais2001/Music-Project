@@ -112,18 +112,22 @@ def signup(request):
     
 def loginpage(request):
     if request.method=="POST":
-      user_name=request.POST.get('user_name') 
-      pass1=request.POST.get('pass1')
-      print(user_name, pass1)
-      user=authenticate(username=user_name,password=pass1) 
-      print(type(user))
-     
-      login(request,user)
-      print(request.user)
-      return redirect('/')
+        user_name=request.POST.get('user_name') 
+        pass1=request.POST.get('pass1')
+        print(user_name, pass1)
+        user=authenticate(username=user_name,password=pass1) 
+        print(type(user))
+        if user:                        
+            login(request,user)
+            print(request.user)
+            return redirect('/')
+        else:
+            
+            return render (request,'login.html',{'msg':"invalid username or password"})
+
     else:
         
-      return render(request,'login.html')
+        return render(request,'login.html')
   
   
 def logoutpage(request):
@@ -161,5 +165,8 @@ def watchlater(request):
             msg="u have successfuly added"
         song=Song.objects.filter(song_id=video_id).first()
         return render(request,'listen.html',{'song':song , 'msg':msg})    
-    return render(request,'watchlater.html')
+    user_watch=Watch_later.objects.filter(user=request.user)
+    print(user_watch)
+    
+    return render(request,'watchlater.html', {'user_watch':user_watch})
     

@@ -11,6 +11,9 @@
       <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
         <form action="{% url 'login'%}" method="POST">
           {%csrf_token%}
+          {% if msg %}
+          <div>{{msg}}</div>
+          {% endif%}
           <!-- Email input -->
           <div class="form-outline mb-4">
             <input type="text" id="form1Example13" class="form-control form-control-lg" name="user_name"/>
@@ -34,6 +37,7 @@
 
           <!-- Submit button -->
           <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+
 
           <!-- <div class="divider d-flex align-items-center my-4">
             <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>

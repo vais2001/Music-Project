@@ -2,4 +2,24 @@
 {% block body %}
 {% load static%}
 <h4 style="color: blue; text-align:center"> WatchLater </h4>
+<div class="container">
+{% for i in user_watch %}
+<div class="card mb-3" style="max-width: 500px; padding-top:4%">
+    <div class="row no-gutters">
+      <div class="col-md-5">
+        <img src="/media/{{i.video.album_picture}}" class="img-fluid rounded-start" alt="..." >
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title" style="color: darkgreen;font-weight:500">{{i.song_name}}</h5>
+          <p class="card-text" style="color: darkgreen;font-weight:500">{{i.album_title}}</p>
+          <a href="/listen_song/{{i.video.song_id}}"><button class="btn btn-outline-success">Listen</button></a>
+        </div>
+        <div>{{i.video.song_id}}</div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+</div>
 {% endblock %}
